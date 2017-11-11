@@ -1,7 +1,5 @@
 package com.agrawal93.array.problems;
 
-import com.google.common.base.Stopwatch;
-import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,64 +9,48 @@ import org.junit.Test;
  */
 public class ArrayRotationTest {
 
-    private final int MAX_SIZE = 1000001;
-    private final Object array[] = new Object[MAX_SIZE];
-    private final Object result[];
-
-    private final int ROTATE_BY = (int) Math.floor(Math.random() * MAX_SIZE);
-
-    public ArrayRotationTest() {
-        Random random = new Random();
-        for (int i = 0; i < MAX_SIZE; i++) {
-            array[i] = random.nextInt();
-        }
-        result = array.clone();
-        ArrayRotation.rotate(result, ROTATE_BY, ArrayRotation.RotationMethod.JUGGLING_ALGORITHM);
-    }
+    private static final Integer ARRAY[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    private static final Integer RESULT[] = {5, 6, 7, 8, 9, 10, 1, 2, 3, 4};
+    private final int ROTATE_BY = 4;
 
     @Test
     public void test_TempArray() {
-        Object array[] = this.array.clone();
-        Stopwatch timer = Stopwatch.createStarted();
+        System.out.println("[TEST] Array Rotation using Temporary Array");
+        Integer array[] = ARRAY.clone();
         ArrayRotation.rotate(array, ROTATE_BY, ArrayRotation.RotationMethod.TEMP_ARRAY);
-        System.out.println("[PERF] Array Rotation using Temporary Array: " + timer.stop());
-        Assert.assertArrayEquals(result, array);
+        Assert.assertArrayEquals(array, RESULT);
     }
 
-    //@Test
+    @Test
     public void test_OneByOne() {
-        Object array[] = this.array.clone();
-        Stopwatch timer = Stopwatch.createStarted();
+        System.out.println("[TEST] Array Rotation by rotating elements One by One");
+        Integer array[] = ARRAY.clone();
         ArrayRotation.rotate(array, ROTATE_BY, ArrayRotation.RotationMethod.ONE_BY_ONE);
-        System.out.println("[PERF] Array Rotation by rotating elements One by One: " + timer.stop());
-        Assert.assertArrayEquals(result, array);
+        Assert.assertArrayEquals(array, RESULT);
     }
 
     @Test
     public void test_JugglingAlgorithm() {
-        Object array[] = this.array.clone();
-        Stopwatch timer = Stopwatch.createStarted();
+        System.out.println("[TEST] Array Rotation using Juggling Algorithm");
+        Integer array[] = ARRAY.clone();
         ArrayRotation.rotate(array, ROTATE_BY, ArrayRotation.RotationMethod.JUGGLING_ALGORITHM);
-        System.out.println("[PERF] Array Rotation using Juggling Algorithm: " + timer.stop());
-        Assert.assertArrayEquals(result, array);
+        Assert.assertArrayEquals(array, RESULT);
     }
 
     @Test
     public void test_ReversalAlgorithm() {
-        Object array[] = this.array.clone();
-        Stopwatch timer = Stopwatch.createStarted();
+        System.out.println("[TEST] Array Rotation using Reversal Algorithm");
+        Integer array[] = ARRAY.clone();
         ArrayRotation.rotate(array, ROTATE_BY, ArrayRotation.RotationMethod.REVERSAL_ALGORITHM);
-        System.out.println("[PERF] Array Rotation using Reversal Algorithm: " + timer.stop());
-        Assert.assertArrayEquals(result, array);
+        Assert.assertArrayEquals(array, RESULT);
     }
 
     @Test
     public void test_BlockSwapAlgorithm() {
-        Object array[] = this.array.clone();
-        Stopwatch timer = Stopwatch.createStarted();
+        System.out.println("[TEST] Array Rotation using Block Swap Algorithm");
+        Integer array[] = ARRAY.clone();
         ArrayRotation.rotate(array, ROTATE_BY, ArrayRotation.RotationMethod.BLOCK_SWAP_ALGORITHM);
-        System.out.println("[PERF] Array Rotation using Block Swap Algorithm: " + timer.stop());
-        Assert.assertArrayEquals(result, array);
+        Assert.assertArrayEquals(array, RESULT);
     }
 
 }
