@@ -16,7 +16,6 @@ public class ArrayRotationPerfTest {
     private static final int ROTATE_BY = (int) Math.floor(Math.random() * MAX_SIZE);
 
     private static final Integer ARRAY[] = new Integer[MAX_SIZE];
-    private static Integer RESULT[] = new Integer[MAX_SIZE];
 
     @BeforeClass
     public static void init() {
@@ -24,8 +23,6 @@ public class ArrayRotationPerfTest {
         for (int i = 0; i < MAX_SIZE; i++) {
             ARRAY[i] = random.nextInt();
         }
-        RESULT = ARRAY.clone();
-        ArrayRotation.rotate(RESULT, ROTATE_BY, ArrayRotation.RotationMethod.JUGGLING_ALGORITHM);
     }
 
     @Test
