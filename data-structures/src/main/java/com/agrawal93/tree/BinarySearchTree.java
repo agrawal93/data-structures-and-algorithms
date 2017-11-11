@@ -3,6 +3,7 @@ package com.agrawal93.tree;
 import com.agrawal93.tree.node.Node;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  *
@@ -27,17 +28,18 @@ public class BinarySearchTree<T extends Comparable> extends BinaryTree<T> {
     }
 
     @Override
-    protected Node<T> removeRecursively(Node<T> root, T value) {
+    protected Node<T> removeRecursively(Node<T> root, T value, AtomicReference<Node<T>> removedNode) {
         if (root == null) {
             return null;
         }
 
         int compareValue = value.compareTo(root.value);
         if (compareValue < 0) {
-            root.left = removeRecursively(root.left, value);
+            root.left = removeRecursively(root.left, value, removedNode);
         } else if (compareValue > 0) {
-            root.right = removeRecursively(root.right, value);
+            root.right = removeRecursively(root.right, value, removedNode);
         } else {
+            removedNode.set(root);
             if (root.left == null) {
                 return root.right;
             } else if (root.right == null) {
@@ -45,7 +47,7 @@ public class BinarySearchTree<T extends Comparable> extends BinaryTree<T> {
             }
 
             root.value = nextInorderSuccessor(root.right);
-            root.right = removeRecursively(root.right, root.value);
+            root.right = removeRecursively(root.right, root.value, removedNode);
         }
 
         return root;
@@ -76,7 +78,13 @@ public class BinarySearchTree<T extends Comparable> extends BinaryTree<T> {
 
     public static <K extends Comparable> BinarySearchTree treeFromPreOrder(List<K> preOrderTraversal) {
         BinarySearchTree<K> tree = new BinarySearchTree<>();
-        tree.root = BinaryTree.createNodeUsingPreOrder(preOrderTraversal, new AtomicInteger(0), null, null);
+        tree.root = BinaryTree.createTreeUsingPreOrder(preOrderTraversal, new AtomicInteger(0), null, null);
+        return tree;
+    }
+
+    public static <K extends Comparable> BinarySearchTree treeFromPostOrder(List<K> postOrderTraversal) {
+        BinarySearchTree<K> tree = new BinarySearchTree<>();
+        tree.root = BinaryTree.createTreeUsingPostOrder(postOrderTraversal, new AtomicInteger(postOrderTraversal.size()-1), null, null);
         return tree;
     }
 
