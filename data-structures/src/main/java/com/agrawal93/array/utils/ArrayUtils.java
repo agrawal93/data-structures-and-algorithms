@@ -15,9 +15,9 @@ public class ArrayUtils {
      * @param start Start Index
      * @param end End Index
      */
-    public static void reverse(Object array[], int start, int end) {
+    public static <T> void reverse(T array[], int start, int end) {
         while(start < end) {
-            Object temp = array[start];
+            T temp = array[start];
             array[start] = array[end];
             array[end] = temp;
             start++;
@@ -34,9 +34,9 @@ public class ArrayUtils {
      * @param si Start Index of Second Block
      * @param count Count of elements to be swapped
      */
-    public static void swap(Object array[], int fi, int si, int count) {
+    public static <T> void swap(T array[], int fi, int si, int count) {
         for(int i=0; i<count; i++) {
-            Object temp = array[fi + i];
+            T temp = array[fi + i];
             array[fi + i] = array[si + i];
             array[si + i] = temp;
         }

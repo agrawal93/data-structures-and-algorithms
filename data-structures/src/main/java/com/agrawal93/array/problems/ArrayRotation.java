@@ -25,7 +25,7 @@ public class ArrayRotation {
      * @param rotateBy Count of elements to be rotated
      * @param method Method of rotation to be applied
      */
-    public static void rotate(Object array[], int rotateBy, RotationMethod method) {
+    public static <T> void rotate(T array[], int rotateBy, RotationMethod method) {
         if (rotateBy >= array.length) {
             rotateBy %= array.length;
         }
@@ -61,14 +61,14 @@ public class ArrayRotation {
      * @param array Array to be rotated
      * @param rotateBy Count of elements to be rotated
      */
-    private static void rotateArray_TempArray(Object array[], int rotateBy) {
+    private static <T> void rotateArray_TempArray(T array[], int rotateBy) {
         Object temp[] = new Object[rotateBy];
         for (int i = 0, k = 0; i < array.length; i++) {
             if (i < rotateBy) {
                 temp[i] = array[i];
             }
 
-            array[i] = (i < array.length - rotateBy) ? array[rotateBy + i] : temp[k++];
+            array[i] = (T)((i < array.length - rotateBy) ? array[rotateBy + i] : temp[k++]);
         }
     }
 
@@ -82,9 +82,9 @@ public class ArrayRotation {
      * @param array Array to be rotated
      * @param rotateBy Count of elements to be rotated
      */
-    private static void rotateArray_OneByOne(Object array[], int rotateBy) {
+    private static <T> void rotateArray_OneByOne(T array[], int rotateBy) {
         for (int i = 0; i < rotateBy; i++) {
-            Object temp = array[0];
+            T temp = array[0];
             for (int j = 0; j < array.length - 1; j++) {
                 array[j] = array[j + 1];
             }
@@ -102,10 +102,10 @@ public class ArrayRotation {
      * @param array Array to be rotated
      * @param rotateBy Count of elements to be rotated
      */
-    private static void rotateArray_JugglingAlgorithm(Object array[], int rotateBy) {
+    private static <T> void rotateArray_JugglingAlgorithm(T array[], int rotateBy) {
         long gcd = GCD.gcd(rotateBy, array.length, GCD.GCDMethod.EUCLIDEAN);
         for (int i = 0; i < gcd; i++) {
-            Object temp = array[i];
+            T temp = array[i];
             int j = i;
             while (true) {
                 int k = j + rotateBy;
@@ -132,7 +132,7 @@ public class ArrayRotation {
      * @param array Array to be rotated
      * @param rotateBy Count of elements to be rotated
      */
-    private static void rotateArray_ReversalAlgorithm(Object array[], int rotateBy) {
+    private static <T> void rotateArray_ReversalAlgorithm(T array[], int rotateBy) {
         ArrayUtils.reverse(array, 0, rotateBy - 1);
         ArrayUtils.reverse(array, rotateBy, array.length - 1);
         ArrayUtils.reverse(array, 0, array.length - 1);
@@ -148,7 +148,7 @@ public class ArrayRotation {
      * @param array Array to be rotated
      * @param rotateBy Count of elements to be rotated
      */
-    private static void rotateArray_BlockSwapAlgorithm(Object array[], int rotateBy) {
+    private static <T> void rotateArray_BlockSwapAlgorithm(T array[], int rotateBy) {
         if (rotateBy == 0) {
             return;
         }
