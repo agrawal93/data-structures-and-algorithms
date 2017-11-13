@@ -1,6 +1,10 @@
 package com.agrawal93.tree;
 
 import com.agrawal93.tree.node.Node;
+import com.agrawal93.tree.problems.InOrderTraversal;
+import com.agrawal93.tree.problems.LevelOrderTraversal;
+import com.agrawal93.tree.problems.PostOrderTraversal;
+import com.agrawal93.tree.problems.PreOrderTraversal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,82 +57,65 @@ public abstract class BinaryTree<T extends Comparable> {
         return hash;
     }
 
+    public Node<T> root() {
+        return root;
+    }
+    
+    public long leafCount() {
+        return leafCountRecursively(root);
+    }
+    
+    private long leafCountRecursively(Node<T> root) {
+        if(root == null) return 0;
+        if(root.left == null && root.right == null) return 1;
+        
+        long count = root.left == null ? 0 : leafCountRecursively(root.left);
+        count += root.right == null ? 0 : leafCountRecursively(root.right);
+        return count;
+    }
+    
+    public long size() {
+        return countRecursively(root);
+    }
+    
+    private long countRecursively(Node<T> root) {
+        if(root == null) return 0;
+        
+        long count = 1;
+        count += root.left == null ? 0 : countRecursively(root.left);
+        count += root.right == null ? 0 : countRecursively(root.right);
+        return count;
+    }
+    
+    public long height() {
+        return heightRecursively(root);
+    }
+
+    private long heightRecursively(Node<T> root) {
+        if (root == null) {
+            return 0;
+        }
+        return 1 + Math.max(heightRecursively(root.left), heightRecursively(root.right));
+    }
+
     public List<T> inorderTraversal() {
-        List<T> result = new ArrayList<>();
-        inorderTraversalRecursively(root, result);
-        return result;
+        return InOrderTraversal.traverse(this, InOrderTraversal.TraversalMethod.RECURSIVE);
     }
 
     public List<T> preorderTraversal() {
-        List<T> result = new ArrayList<>();
-        preorderTraversalRecursively(root, result);
-        return result;
+        return PreOrderTraversal.traverse(this, PreOrderTraversal.TraversalMethod.RECURSIVE);
     }
 
     public List<T> postorderTraversal() {
-        List<T> result = new ArrayList<>();
-        postorderTraversalRecursively(root, result);
-        return result;
+        return PostOrderTraversal.traverse(this, PostOrderTraversal.TraversalMethod.RECURSIVE);
     }
 
     public List<T> levelorderTraversal() {
-        List<T> result = new ArrayList<>();
-        levelorderTraversalByLines().stream().forEach(list -> list.stream().forEach(result::add));
-        return result;
+        return LevelOrderTraversal.traverse(this, LevelOrderTraversal.TraversalMethod.ITERATIVE);
     }
 
     public List<List<T>> levelorderTraversalByLines() {
-        List<List<T>> result = new ArrayList<>();
-
-        Queue<Node<T>> queue = new LinkedList<>();
-        queue.offer(this.root);
-        while (!queue.isEmpty()) {
-            int levelCount = queue.size();
-            List<T> levelList = new ArrayList<>(levelCount);
-            while (levelCount-- > 0) {
-                Node<T> current = queue.poll();
-                levelList.add(current.value);
-                if (current.left != null) {
-                    queue.add(current.left);
-                }
-                if (current.right != null) {
-                    queue.add(current.right);
-                }
-            }
-            result.add(levelList);
-        }
-
-        return result;
-    }
-
-    private void inorderTraversalRecursively(Node<T> root, List<T> result) {
-        if (root == null) {
-            return;
-        }
-
-        inorderTraversalRecursively(root.left, result);
-        result.add(root.value);
-        inorderTraversalRecursively(root.right, result);
-    }
-
-    private void preorderTraversalRecursively(Node<T> root, List<T> result) {
-        if (root == null) {
-            return;
-        }
-
-        result.add(root.value);
-        preorderTraversalRecursively(root.left, result);
-        preorderTraversalRecursively(root.right, result);
-    }
-
-    private void postorderTraversalRecursively(Node<T> root, List<T> result) {
-        if (root == null) {
-            return;
-        }
-
-        postorderTraversalRecursively(root.left, result);
-        postorderTraversalRecursively(root.right, result);
-        result.add(root.value);
+        return LevelOrderTraversal.traverse_LineByLine(root);
     }
 
     protected static <K extends Comparable> Node<K> createTreeUsingPreOrder(List<K> preOrderTraversal, AtomicInteger index, K lowerBound, K upperBound) {
