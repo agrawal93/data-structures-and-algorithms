@@ -3,6 +3,7 @@ package com.agrawal93.tree.problems;
 import com.agrawal93.tree.BinaryTree;
 import com.agrawal93.tree.node.Node;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -97,4 +98,8 @@ public class PostOrderTraversal {
         }
     }
 
+//    public static <T extends Comparable> List<T> construct(List<T> preOrder, List<T> inOrder) {
+//        
+//    }
+    
 }

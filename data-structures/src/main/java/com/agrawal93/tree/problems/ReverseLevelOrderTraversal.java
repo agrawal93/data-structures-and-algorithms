@@ -11,7 +11,7 @@ import java.util.Queue;
  *
  * @author Hardik Agrawal [ hardik93@ymail.com ]
  */
-public class LevelOrderTraversal {
+public class ReverseLevelOrderTraversal {
     
     public static enum TraversalMethod {
         RECURSIVE,
@@ -23,7 +23,7 @@ public class LevelOrderTraversal {
         switch(method) {
             case RECURSIVE:
                 long height = tree.height();
-                for(long l = 1; l <= height; l++) {
+                for(long l = height; l >= 1; l--) {
                     traverse_Recursive(tree.root(), result, l);
                 }
                 break;
@@ -53,7 +53,7 @@ public class LevelOrderTraversal {
     }
     
     public static <T extends Comparable> List<List<T>> traverse_LineByLine(Node<T> root) {
-        List<List<T>> result = new ArrayList<>();
+        List<List<T>> result = new LinkedList<>();
         Queue<Node<T>> queue = new LinkedList<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
@@ -69,7 +69,7 @@ public class LevelOrderTraversal {
                     queue.add(current.right);
                 }
             }
-            result.add(levelList);
+            result.add(0, levelList);
         }
         return result;
     }
