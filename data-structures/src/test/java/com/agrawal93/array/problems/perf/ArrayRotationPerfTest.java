@@ -33,11 +33,11 @@ public class ArrayRotationPerfTest {
     }
 
 //    @Test
-    public void test_OneByOne() {
-        Stopwatch timer = Stopwatch.createStarted();
-        ArrayRotation.rotate(ARRAY.clone(), ROTATE_BY, ArrayRotation.RotationMethod.ONE_BY_ONE);
-        System.out.println("[PERF] Array Rotation by rotating elements One by One: " + timer.stop());
-    }
+//    public void test_OneByOne() {
+//        Stopwatch timer = Stopwatch.createStarted();
+//        ArrayRotation.rotate(ARRAY.clone(), ROTATE_BY, ArrayRotation.RotationMethod.ONE_BY_ONE);
+//        System.out.println("[PERF] Array Rotation by rotating elements One by One: " + timer.stop());
+//    }
 
     @Test
     public void test_JugglingAlgorithm() {
